@@ -1,0 +1,21 @@
+Description: make: fix endless loop
+ Fix endless loop on unmatched { in a Makefile with no following newline.
+Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=571652
+Bug: https://sourceforge.net/tracker/?func=detail&aid=2959889&group_id=6556&atid=106556
+Author: Martin Dorey <mdorey@bluearc.com>
+Reviewed-by: Colin Watson <cjwatson@debian.org>
+Last-Update: 2010-02-26
+
+Index: b/make.c
+===================================================================
+--- a/make.c
++++ b/make.c
+@@ -100,7 +100,7 @@
+ 			++matchLevel;
+ 		else if (c == end)
+ 			--matchLevel;
+-		else if (c == '\n')
++		else if (c == '\n' || c == EOF)
+ 			break;
+ 	}
+ 	if (c == EOF)

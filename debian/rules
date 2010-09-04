@@ -1,0 +1,22 @@
+#! /usr/bin/make -f
+%:
+	dh $@
+
+dtmp = debian/exuberant-ctags
+
+ifeq (,$(filter noopt,$(DEB_BUILD_OPTIONS)))
+CFLAGS := -O2 -g -Wall
+else
+CFLAGS := -g -Wall
+endif
+
+override_dh_auto_configure:
+	CFLAGS="$(CFLAGS)" dh_auto_configure
+
+override_dh_auto_install:
+# Install exuberant-ctags itself
+	install -m 755 ctags $(dtmp)/usr/bin/ctags-exuberant
+	install -p -m 644 ctags.1 $(dtmp)/usr/share/man/man1/ctags-exuberant.1
+
+override_dh_installchangelogs:
+	dh_installchangelogs NEWS
