@@ -31,6 +31,7 @@
 	ErlangParser, \
 	FlexParser, \
 	FortranParser, \
+	GoParser, \
 	HtmlParser, \
 	JavaParser, \
 	JavaScriptParser, \
